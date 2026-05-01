@@ -12,16 +12,13 @@ A production-grade REST API for issue/bug tracking across projects. Built with S
 
 ## Architecture
 
-```
-┌──────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│   Postman    │────▶│  Controller  │────▶│   Service    │────▶│  Repository  │
-│   (Client)   │     │    Layer     │     │    Layer     │     │    Layer     │
-└──────────────┘     └──────────────┘     └──────────────┘     └──────┬───────┘
-                           │                                          │
-                     ┌─────┴─────┐                             ┌──────┴───────┐
-                     │ JWT Filter│                             │   MySQL 8    │
-                     │ (Security)│                             │  (Docker)    │
-                     └───────────┘                             └──────────────┘
+```mermaid
+graph LR
+    Client[Postman<br/>Client] --> JWT{JWT Filter<br/>Security}
+    JWT --> Ctrl[Controller<br/>Layer]
+    Ctrl --> Svc[Service<br/>Layer]
+    Svc --> Repo[Repository<br/>Layer]
+    Repo --> DB[(MySQL 8<br/>Docker)]
 ```
 
 ---
